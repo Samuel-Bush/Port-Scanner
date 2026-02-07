@@ -40,7 +40,7 @@ openports = [] # List that will be appended with any ports that are open
 print(f"Scanning {target} in progress")
 
 
-for port, service in commonports.items(): # To check every port in the port dictionary
+for port, service in common_ports.items(): # To check every port in the port dictionary
   if portscanner(target, port): # Checks if the function returns True or False - open or closed
     openports.append((port, service)) # Adds the name of the open port to the open ports list
     print(f"{port}: {service} is open") # Lets user know straight away if open port is found
