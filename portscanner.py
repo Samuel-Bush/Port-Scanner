@@ -1,6 +1,6 @@
 import socket 
 
-common_ports = {
+common_ports = { 
   21: 'FTP',
   22: 'SSH',
   23: 'Telnet',
@@ -16,13 +16,39 @@ common_ports = {
   8080: 'HTTP-Alt',
   8443: 'HTTPS-Alt',
   27017: 'MongoDB'
-}
+} # Dictionary for the common ports
 
-def portscanner(target,port)
+
+def portscanner(target,port) # Function for checking induvidual ports
   try:
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.settimeout(1)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # Create a TCP socket for connecting to the port 
+    
+    sock.settimeout(1) # Allow 1 second to connect to the port
+    result = sock.connect_ex((target,port)) # Try to connect to the port of the target - if successful the result = 0
+    sock.close() # Close the socket after attempting to connect to the port
 
-# IN PROGRESS
-  
-  
+    if result == 0: # If result is 0 port is open
+      return True
+    else: # Else if result isnt 0 port is closed
+      return False
+  except socket.error: # If there is an error treat the port as being closed
+    return False
+
+
+target = input("Enter the target domain or target IP: ") # User enters the target for the port scanner
+openports = [] # List that will be appended with any ports that are open
+print(f"Scanning {target} in progress")
+
+
+for port, service in commonports.items(): # To check every port in the port dictionary
+  if portscanner(target, port): # Checks if the function returns True or False - open or closed
+    openports.append((port, service)) # Adds the name of the open port to the open ports list
+    print(f"{port}: {service} is open") # Lets user know straight away if open port is found
+
+
+print(f"Scan of {target} is complete") 
+if len(openports) > 0:
+  print("Here are the open port(s):")
+  print(openports) # Only prints list if it contains names of open ports
+else:
+  print("None of the scanned ports were open")
