@@ -19,7 +19,7 @@ common_ports = {
 } # Dictionary for the common ports
 
 
-def portscanner(target,port) # Function for checking induvidual ports
+def portscanner(target,port): # Function for checking induvidual ports
   try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # Create a TCP socket for connecting to the port 
     
