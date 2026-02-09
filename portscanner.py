@@ -36,6 +36,12 @@ def portscanner(target,port): # Function for checking induvidual ports
 
 
 target = input("Enter the target domain or target IP: ") # User enters the target for the port scanner
+try:
+  targetip = socket.gethostbyname(target) # Attempts to validate the target
+except socket.gaierror: # Target is not validated
+  print("Error - target not found - maybe check input")
+  exit(1) # Ends the whole program as target is not valid
+  
 openports = [] # List that will be appended with any ports that are open
 print(f"Scanning {target} in progress")
 
